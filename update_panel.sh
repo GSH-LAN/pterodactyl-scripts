@@ -11,8 +11,7 @@ if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
 	composer install --no-dev --optimize-autoloader
 	php artisan view:clear
 	php artisan config:clear
-	php artisan migrate --force
-	php artisan db:seed --force
+	php artisan migrate --seed --force
 	chown -R www-data:www-data *
 	php artisan queue:restart
 	php artisan up
