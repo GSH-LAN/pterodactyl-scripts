@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LATEST_VERSION=$(curl -s https://api.github.com/repos/pterodactyl/panel/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c 2-)
+#LATEST_VERSION=$(curl -s https://api.github.com/repos/pterodactyl/panel/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c 2-)
+LATEST_VERSION=$(curl -s https://cdn.pterodactyl.io/releases/latest.json | grep panel | cut -d '"' -f 4)
 CURRENT_VERSION=$(sed -nE "s/^\s*'version' => '(.*?)',$/\1/p" /var/www/html/pterodactyl/config/app.php)
 
 if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
@@ -15,5 +16,4 @@ if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
 	chown -R www-data:www-data *
 	php artisan queue:restart
 	php artisan up
-
 fi
